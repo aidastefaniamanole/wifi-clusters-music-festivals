@@ -8,6 +8,7 @@ import inet.examples.wireless.power.PowerNetwork;
 import inet.applications.httptools.configurator.HttpController;
 import inet.node.inet.StandardHost;
 import inet.node.inet.Router;
+import inet.node.wireless.AccessPoint;
 
 network WiFiGroup extends PowerNetwork
 {
@@ -26,7 +27,7 @@ network WiFiGroup extends PowerNetwork
             parameters:
                 @display("p=250,150;i=device/server");
         }
-        router_c: Router {
+        router_c: AccessPoint {
             parameters:
                 @display("p=400,200;i=abstract/router");
         }
@@ -37,8 +38,8 @@ network WiFiGroup extends PowerNetwork
 	connections:
 	    router_s.ethg++ <--> ethernetline <--> srv.ethg++;
 	    router_c.ethg++ <--> ethernetline <--> router_s.ethg++;
-	    for i=0..numHost-1 {
-            host[i].ethg++ <--> ethernetline <--> router_c.ethg++;
-        }
+//	    for i=0..numHost-1 {
+//            host[i].ethg++ <--> ethernetline <--> router_c.ethg++;
+//        }
 }
 
