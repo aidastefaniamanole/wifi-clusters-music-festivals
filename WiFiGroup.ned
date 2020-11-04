@@ -13,12 +13,12 @@ network WiFiGroup extends PowerNetwork
 {
 	types:
 		channel ethernetline extends ned.DatarateChannel
-        {
-            delay = 0.1us;
-            datarate = 100Mbps;
-        }
-    submodules:
-        httpController: HttpController {
+		{
+			delay = 0.1us;
+			datarate = 100Mbps;
+		}
+	submodules:
+		httpController: HttpController {
             parameters:
                 @display("is=s;p=100,200;i=block/cogwheel");
         }
@@ -26,7 +26,7 @@ network WiFiGroup extends PowerNetwork
             parameters:
                 @display("p=250,150;i=device/server");
         }
-                router_c: Router {
+        router_c: Router {
             parameters:
                 @display("p=400,200;i=abstract/router");
         }
@@ -36,5 +36,9 @@ network WiFiGroup extends PowerNetwork
         }
 	connections:
 	    router_s.ethg++ <--> ethernetline <--> srv.ethg++;
+	    router_c.ethg++ <--> ethernetline <--> router_s.ethg++;
+	    for i=0..numHost-1 {
+            host[i].ethg++ <--> ethernetline <--> router_c.ethg++;
+        }
 }
 
